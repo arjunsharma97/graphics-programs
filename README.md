@@ -1,2 +1,2 @@
 # graphics-programs
-Programs created inder the computer graphics course
+Programs created under the computer graphics course
