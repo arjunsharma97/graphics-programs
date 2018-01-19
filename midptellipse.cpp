@@ -11,29 +11,40 @@ void ellipse(float x, float y){
     putpixel(-x + 100, -y + 100, 7);
 }
 void completeellipse(float r, float g, float u, float v){
-    double p1, p2;
-    float s = r;
-    float k = g;
-    float e = pow((s + 0.5),2);
-    float f = pow((k-1),2);
-    p2 = u*e + (v*f) - (u*v);
-    ellipse(s,k);
-    while(k>=0){
-        if(p2>0){
-            p2 = p2 + v - (2*v*s);
-        } else {
-            p2 += 2*u*(s+1) - 2*v*(k-1) + v;
-            s++;
+    int x = 0;
+    int y = g;
+    float p  = pow(g,2) - pow(r,2)*g + pow(r,2)/4;
+    while(2.0*x*pow(g,2)<2.0*y*pow(r,2)){
+        if(p<0){
+            x++;
+            p = p + 2*pow(g,2)*x + pow(g,2);
+            //p = p + 2*pow(g,2)*x + pow(g,2) - 2*pow(r,2)*y;
         }
-        k--;
-        ellipse(s,k);
+        else{
+            x++;
+            y--;
+            p = p + 2*pow(g,2)*x + pow(g,2) - 2*pow(r,2)*y;   
+        }
+        ellipse(x,y);
+    }
+    p = pow(x+0.5,2)*pow(g,2) + pow(y-1,2)*pow(r,2) - pow(g,2)*pow(r,2);
+    while(y>=0){
+        if(p>0){
+            y--;
+            p = p - 2*pow(r,2)*y + pow(r,2);
+        } else {
+            y--;
+            x++;
+            p = p+2*g*g*x-2*r*r*y+r*r;
+        }
+        ellipse(x,y);
     }
 }
 
 int main(){
  
  	float r,g,u,v;
-    r = 10;
+    r = 40;
     g = 20;
     u = 100;
     v = 50;
